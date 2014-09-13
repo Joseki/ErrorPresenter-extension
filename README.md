@@ -17,3 +17,17 @@ The best way to install is using  [Composer](http://getcomposer.org/):
 $ composer require joseki/error-presenter-extension:@stable
 ```
 
+Usage
+-----
+
+```
+# config.neon
+
+extensions:
+    ErrorPresenter: Joseki\Application\DI\ErrorPresenterExtension
+
+nette:
+    application:
+        # you can use any nette-like presenter name e.g. Application:Error
+        errorPresenter: 'Error'
+```
