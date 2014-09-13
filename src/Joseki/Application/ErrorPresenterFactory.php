@@ -12,13 +12,13 @@ use Nette\Http\IRequest;
 class ErrorPresenterFactory
 {
 
-    /** @var \Nette\Application\IRouter */
+    /** @var IRouter */
     private $router;
 
-    /** @var \Nette\Http\IRequest */
+    /** @var IRequest */
     private $httpRequest;
 
-    /** @var \Nette\Application\IPresenterFactory */
+    /** @var IPresenterFactory */
     private $presenterFactory;
 
     private $defaultErrorPresenter = null;
@@ -39,13 +39,13 @@ class ErrorPresenterFactory
      */
     public function getErrorPresenter()
     {
-        $request = $this->router->match($this->httpRequest);
+        $errorPresenter = $this->defaultErrorPresenter;
 
+        $request = $this->router->match($this->httpRequest);
         if (!$request instanceof Request) {
-            return $this->defaultErrorPresenter;
+            return $errorPresenter;
         }
 
-        $errorPresenter = $this->defaultErrorPresenter;
         $name = $request->getPresenterName();
         $modules = explode(":", $name);
         unset($modules[count($modules) - 1]);
@@ -70,7 +70,7 @@ class ErrorPresenterFactory
 
 
     /**
-     * @param null $defaultErrorPresenter
+     * @param string $defaultErrorPresenter
      */
     public function setDefaultErrorPresenter($defaultErrorPresenter)
     {
